@@ -17,6 +17,7 @@ class SettingsClass:
 			with open(self._file_location,"r") as file: settings:dict = json.load(file)
 		except json.JSONDecodeError:
 			open(self._file_location,"w").write("{}")
+			settings = {}
 		self._autosave = False
 		self.redirect_uri:str = settings.get("redirect_uri","http://127.0.0.1:9090")
 		self.client_id:str = settings.get("client_id","")
