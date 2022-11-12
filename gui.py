@@ -1,6 +1,13 @@
 import PySimpleGUI as sg
+import settings
 
-layout = [[sg.Text("WIP")],
+settings_layout = sg.Tab(
+	"Settings",
+	[[sg.Text(i),sg.Push(),sg.Text(settings.Settings[i] if i != "client_secret" else "*" * len(settings.Settings[i]))] for i in settings.Settings]
+)
+
+layout=[[sg.TabGroup([[settings_layout]],"topleft")],
+		[sg.Text("WIP")],
 		[sg.Button("Ok"), sg.Button("Quit")]]
 
 sg.theme("DarkGreen5")

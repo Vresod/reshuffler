@@ -39,12 +39,21 @@ class SettingsClass:
 			repr_str += f"{key}={repr(self.__dict__[key])}, "
 		repr_str += f"_file_location={repr(self._file_location)}>"
 		return repr_str
+	
+	def __iter__(self):
+		for i in [i for i in self.__dict__.keys() if i[0] != "_"]:
+			yield i
+	
+	def __getitem__(self,item):
+		if item[0] != "_":
+			return self.__dict__[item]
+		raise KeyError(repr(item))
 
 Settings = SettingsClass("settings.json")
 
 def main():
 	print(Settings)
-	Settings.added_songs = 45
+	Settings.added_songs = 45 # just a testing thing
 
 if __name__ == "__main__":
 	main()
