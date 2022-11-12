@@ -2,27 +2,18 @@ import spotipy
 from spotipy.oauth2 import SpotifyOAuth
 import dotenv
 import random # omegalul
-import json
+import extra
+
+# useful resources:
+# https://spotipy.readthedocs.io/en/2.21.0/
+# https://jsonviewer.com
+# https://developer.spotify.com/documentation/web-api/
 
 # TODO:
-# - add URL support
 # - add album / saved songs support
 # - GUI
 # - other forms of shuffling
 # - deshittify codebase
-
-def pick_playlist(playlists):
-	print("Pick a playlist to shuffle through:")
-	for i,list in enumerate(playlists):
-		print(f"{i} - {list['name']}")
-	selection = input("> ")
-	try:
-		return playlists[int(selection)]
-	except ValueError:
-		return sp.playlist(selection)
-	except IndexError:
-		print(f"Value not between 0 and {len(playlists) - 1}; please try again or use ^C to quit.")
-		return pick_playlist(playlists)
 
 scope = ("user-library-read", "playlist-read-private", "playlist-read-collaborative", "user-modify-playback-state", "user-read-currently-playing")
 settings = dotenv.dotenv_values(".env")
@@ -30,7 +21,7 @@ sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope,client_id=settings['C
 
 playlists = sp.current_user_playlists()['items']
 
-picked = pick_playlist(playlists)
+picked = extra.pick_playlist(sp,playlists)
 # picked = playlists[3]
 
 results = sp.playlist_tracks(picked['id'])
