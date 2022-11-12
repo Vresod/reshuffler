@@ -30,7 +30,7 @@ while results['limit'] + results['offset'] < results['total']:
 	tracks.extend(results['items'])
 
 new_queue = list[str]()
-for i in range(90):
+for i in range(settings.Settings.added_songs):
 	track = random.choice(tracks)['track']
 	print(i,track['artists'][0]['name']," - ",track['name'])
 	new_queue.append(track['id'])
