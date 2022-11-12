@@ -1,6 +1,6 @@
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
-import dotenv
+import settings
 import random # omegalul
 import extra
 
@@ -16,8 +16,7 @@ import extra
 # - deshittify codebase
 
 scope = ("user-library-read", "playlist-read-private", "playlist-read-collaborative", "user-modify-playback-state", "user-read-currently-playing")
-settings = dotenv.dotenv_values(".env")
-sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope,client_id=settings['CLIENT_ID'],client_secret=settings['CLIENT_SECRET'],redirect_uri=settings['REDIRECT_URI']))
+sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope,client_id=settings.Settings.client_id,client_secret=settings.Settings.client_id,redirect_uri=settings.Settings.client_id))
 
 playlists = sp.current_user_playlists()['items']
 
