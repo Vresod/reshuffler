@@ -1,4 +1,6 @@
 import PySimpleGUI as sg
+import sys
+import ctypes
 import settings
 
 # GUI TODO:
@@ -8,10 +10,15 @@ import settings
 # make colors look nicer
 # add icon, separate from python.exe, etc, basically just steal boilerplate from AUE-PY
 
+__version__ = "v0.1"
+
 settings_layout = sg.Tab(
 	"Settings",
-	[[sg.Text(i),sg.Push(),sg.Text(settings.Settings[i] if i != "client_secret" else "*" * len(settings.Settings[i]))] for i in settings.Settings]
+	[[sg.Text(i),sg.Push(),sg.Input(settings.Settings[i],password_char="" if i != "client_secret" else "*" * len(settings.Settings[i]))] for i in settings.Settings]
 )
+
+if sys.platform == 'win32' and not sys.argv[0].endswith('.exe'):
+	ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID(f'Vresod.Reshuffler.{__version__}') # string is arbitrary
 
 layout=[[sg.TabGroup([[settings_layout]],"topleft")],
 		[sg.Text("WIP")],
