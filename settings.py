@@ -36,13 +36,14 @@ class SettingsClass:
 	
 	def __repr__(self) -> str:
 		repr_str = f"<SettingsClass: "
-		for key in [k for k in self.__dict__.keys() if k[0] != "_"]:
+		for key in self:
 			repr_str += f"{key}={repr(self.__dict__[key])}, "
 		repr_str += f"_file_location={repr(self._file_location)}>"
 		return repr_str
 	
 	def __iter__(self):
-		for i in [i for i in self.__dict__.keys() if i[0] != "_"]:
+		for i in self.__dict__.keys():
+			if i[0] == "_": continue
 			yield i
 	
 	def __getitem__(self,item):
@@ -52,9 +53,53 @@ class SettingsClass:
 
 Settings = SettingsClass("settings.json")
 
+def assert_default_settings(settings:SettingsClass):
+	assert settings.added_songs == 90
+	assert settings.client_id == ""
+	assert settings.client_secret == ""
+	assert settings.redirect_uri == "http://127.0.0.1:9090"
+
 def main():
-	print(Settings)
-	Settings.added_songs = 45 # just a testing thing
+	# i wrote this function because I wanted to feel productive while doing nothing productive at all
+	# it did end up making the code a little less shit but not in any meaningful way
+	"""
+	resets your settings and performs some code tests
+	"""
+	f = "settings.json"
+
+	# test __init__ from a corrupted state
+	with open(f,"w") as file: file.write("{")
+	Settings = SettingsClass(f)
+	assert_default_settings(Settings)
+	
+	# test __init__ from a non-blank state
+	Settings = SettingsClass(f)
+	assert_default_settings(Settings)
+	
+	# test __init__ from a blank state
+	os.remove(f)
+	Settings = SettingsClass(f)
+	assert_default_settings(Settings)
+
+	# test __setattr__
+	Settings.added_songs = 45
+	assert Settings.added_songs == 45 # seems stupid but considering we do fuck with the __setattr__ function I believe it is a good test
+
+	# test __iter__
+	assert 'added_songs' in Settings
+	assert '_file_location' not in Settings
+
+	# test __repr__
+	print(Settings) # tell me if it looks good, that's about all I can say
+
+	# test __getitem__
+	assert Settings['added_songs'] == 45
+	try: # can't assert that an error will happen but we can error if it does
+		Settings['_file_location']
+		raise AssertionError
+	except KeyError: pass
+
+	Settings.added_songs = 90 # assuming everything else went well this will set it back to the default value
 
 if __name__ == "__main__":
 	main()
