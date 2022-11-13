@@ -1,6 +1,6 @@
 import spotipy
 from spotipy.oauth2 import SpotifyOAuth
-import settings
+from settings import Settings
 import random # omegalul
 import extra
 
@@ -16,7 +16,7 @@ import extra
 # - deshittify codebase
 
 scope = ("user-library-read", "playlist-read-private", "playlist-read-collaborative", "user-modify-playback-state", "user-read-currently-playing")
-sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope,client_id=settings.Settings.client_id,client_secret=settings.Settings.client_id,redirect_uri=settings.Settings.client_id))
+sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope,client_id=Settings.client_id,client_secret=Settings.client_id,redirect_uri=Settings.client_id))
 
 playlists = sp.current_user_playlists()['items']
 
@@ -30,7 +30,7 @@ while results['limit'] + results['offset'] < results['total']:
 	tracks.extend(results['items'])
 
 new_queue = list[str]()
-for i in range(settings.Settings.added_songs):
+for i in range(Settings.added_songs):
 	track = random.choice(tracks)['track']
 	print(i,track['artists'][0]['name']," - ",track['name'])
 	new_queue.append(track['id'])

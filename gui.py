@@ -1,7 +1,7 @@
 import PySimpleGUI as sg
 import sys
 import ctypes
-import settings
+from settings import Settings
 
 # GUI TODO:
 # make backend.py more modular
@@ -14,7 +14,7 @@ __version__ = "v0.1"
 
 settings_layout = sg.Tab(
 	"Settings",
-	[[sg.Text(i),sg.Push(),sg.Input(settings.Settings[i],password_char="" if i != "client_secret" else "*" * len(settings.Settings[i]))] for i in settings.Settings]
+	[[sg.Text(i),sg.Push(),sg.Input(Settings[i],password_char="" if i != "client_secret" else "*" * len(Settings[i]))] for i in Settings]
 )
 
 if sys.platform == 'win32' and not sys.argv[0].endswith('.exe'):
