@@ -15,9 +15,9 @@ import extra
 # - other forms of shuffling
 # - deshittify codebase
 
-sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=extra.SCOPES,client_id=Settings.client_id,client_secret=Settings.client_id,redirect_uri=Settings.client_id))
+sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=extra.SCOPES,client_id=Settings.client_id,client_secret=Settings.client_secret,redirect_uri=Settings.redirect_uri))
 
-def list_playlists():
+def list_playlists() -> list:
 	return sp.current_user_playlists()['items']
 
 def get_track_list(playlist:dict) -> list:
@@ -51,4 +51,4 @@ def main():
 	add_to_queue(new_queue)
 
 if __name__ == "__main__":
-	pass
+	main()

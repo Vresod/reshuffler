@@ -50,6 +50,9 @@ class SettingsClass:
 		if item[0] != "_":
 			return self.__dict__[item]
 		raise KeyError(repr(item))
+	
+	def __setitem__(self,key,value):
+		self.__setattr__(key,value)
 
 Settings = SettingsClass("settings.json")
 
