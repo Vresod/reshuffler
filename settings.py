@@ -2,7 +2,7 @@ import json
 import os
 from typing import Union
 
-__exports__ = ["Settings"]
+__all__ = ["Settings"]
 
 class SettingsClass:
 	def __init__(self,file_location:Union[str,os.PathLike]) -> None:
