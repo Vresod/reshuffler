@@ -15,8 +15,7 @@ import extra
 # - other forms of shuffling
 # - deshittify codebase
 
-scope = ("user-library-read", "playlist-read-private", "playlist-read-collaborative", "user-modify-playback-state", "user-read-currently-playing")
-sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=scope,client_id=Settings.client_id,client_secret=Settings.client_id,redirect_uri=Settings.client_id))
+sp = spotipy.Spotify(auth_manager=SpotifyOAuth(scope=extra.SCOPES,client_id=Settings.client_id,client_secret=Settings.client_id,redirect_uri=Settings.client_id))
 
 playlists = sp.current_user_playlists()['items']
 

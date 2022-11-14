@@ -12,3 +12,5 @@ def pick_playlist(sp:spotipy.Spotify,playlists:list[dict]) -> dict:
 	except IndexError:
 		print(f"Value not between 0 and {len(playlists) - 1}; please try again or use ^C to quit.")
 		return pick_playlist(playlists)
+
+SCOPES = ("user-library-read", "playlist-read-private", "playlist-read-collaborative", "user-modify-playback-state", "user-read-currently-playing")
