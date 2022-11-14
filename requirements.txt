@@ -1,3 +1,2 @@
 spotipy
-python-dotenv
 pysimplegui
